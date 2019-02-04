@@ -70,7 +70,7 @@ module Kitchen
         logger.debug "Options #{opts.inspect}"
 
         # add attributes
-        opts[:attrs] = config[:attrs]
+        opts[:attrs] = config[:attrs].map { |s| s % { platform: instance.platform.name, suite: instance.suite.name } } unless config[:attrs].nil?
         opts[:attributes] = Hashie.stringify_keys config[:attributes] unless config[:attributes].nil?
 
         # setup logger
