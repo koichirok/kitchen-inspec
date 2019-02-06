@@ -70,7 +70,6 @@ module Kitchen
         logger.debug "Options #{opts.inspect}"
 
         # add attributes
-        opts[:attrs] = config[:attrs].map { |s| s % { platform: instance.platform.name, suite: instance.suite.name } } unless config[:attrs].nil?
         opts[:attributes] = Hashie.stringify_keys config[:attributes] unless config[:attributes].nil?
 
         # setup logger
@@ -204,6 +203,7 @@ module Kitchen
           runner_options["profiles_path"] = config[:profiles_path] unless config[:profiles_path].nil?
           runner_options["reporter"] = config[:reporter].map { |s| s % { platform: platform, suite: suite } } unless config[:reporter].nil?
           runner_options[:controls] = config[:controls]
+          runner_options["attrs"] = config[:attrs].map { |s| s % { platform: platform, suite: suite } } unless config[:attrs].nil?
 
           # check to make sure we have a valid version for caching
           if config[:backend_cache]
